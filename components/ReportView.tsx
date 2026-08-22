@@ -10,7 +10,7 @@ const schemaTypes = ["Organization", "LocalBusiness", "WebSite", "BreadcrumbList
 
 export function ReportView({ report }: { report: SiteReport }) {
   const issues = report.checks.filter((item) => item.status !== "passed").sort((a, b) => impactOrder[b.priority] - impactOrder[a.priority]);
-  const date = new Intl.DateTimeFormat("pt-BR", { dateStyle: "medium", timeStyle: "short" }).format(new Date(report.scannedAt));
+  const date = new Intl.DateTimeFormat("pt-BR", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Sao_Paulo" }).format(new Date(report.scannedAt));
   return (
     <div className="report-app">
       <aside className="sidebar print-hide">

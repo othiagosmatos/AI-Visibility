@@ -14,5 +14,7 @@ test("server-renders the Lumina landing page", async () => {
   assert.match(html, /<title>Lumina — AI Visibility para seu site<\/title>/i);
   assert.match(html, /Descubra como as IAs/);
   assert.match(html, /Analisar site/);
+  assert.match(html, /lumina-theme/);
+  assert.match(html, /Ativar tema escuro/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Building your site/i);
 });
