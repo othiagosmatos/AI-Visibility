@@ -14,12 +14,12 @@ export function ReportView({ report }: { report: SiteReport }) {
   return (
     <div className="report-app">
       <aside className="sidebar print-hide">
-        <Link className="brand" href="/"><span className="brand-mark">L</span><span>Lumina</span></Link>
+        <Link className="brand" href="/#analisar" aria-label="Lumina, iniciar nova análise"><span className="brand-mark">L</span><span>Lumina</span></Link>
         <nav><a href="#overview" className="active"><span>◫</span>Visão geral</a><a href="#crawlers"><span>⌁</span>AI Crawlers</a><a href="#schema"><span>{"{ }"}</span>Structured Data</a><a href="#interpretation"><span>✦</span>Como as IAs enxergam</a><a href="#pages"><span>▤</span>Páginas analisadas</a><a href="#recommendations"><span>↗</span>Recomendações</a><Link href="/history"><span>◷</span>Histórico</Link></nav>
         <div className="sidebar-note"><strong>O que este relatório mede</strong><p>Preparação técnica e editorial. Permissão de acesso não comprova visita ou citação por uma IA.</p></div>
       </aside>
       <main className="report-main">
-        <header className="report-header print-hide"><div><Link href="/">← Nova análise</Link><strong>{report.domain}</strong><span>Última análise: {date}</span></div><button onClick={() => window.print()}>Gerar relatório <span>↗</span></button></header>
+        <header className="report-header print-hide"><div><Link href="/#analisar">← Nova análise</Link><strong>{report.domain}</strong><span>Última análise: {date}</span></div><button onClick={() => window.print()}>Gerar relatório <span>↗</span></button></header>
         <section className="report-content" id="overview">
           <div className="report-title"><div><p>RELATÓRIO DE VISIBILIDADE</p><h1>{report.domain}</h1><span>{report.pages.length} páginas analisadas em {(report.durationMs / 1000).toFixed(1)}s</span></div><div className="confidence-pill">Baseado em evidências do site</div></div>
           <article className="hero-score-card"><div><span>AI VISIBILITY SCORE</span><h2>{report.scoreLabel}</h2><p>O score soma regras mensuráveis de acesso, conteúdo, estrutura, entidades, autoridade e SEO técnico.</p><a href="#recommendations">Ver recomendações prioritárias →</a></div><ScoreGauge score={report.score} label={report.scoreLabel} /></article>
