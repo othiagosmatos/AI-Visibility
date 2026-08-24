@@ -8,7 +8,7 @@ Lumina é um MVP funcional para analisar como um site está preparado para ser e
 
 - Vinext/Next.js App Router, React 19 e TypeScript strict
 - Tailwind CSS 4 e CSS responsivo
-- Cloudflare Workers e D1
+- Netlify Functions e Netlify Blobs
 - Zod para validação da API
 - Fetch nativo e parser HTML/JSON-LD modular
 - Drizzle para declarar e migrar o schema SQLite
@@ -16,8 +16,8 @@ Lumina é um MVP funcional para analisar como um site está preparado para ser e
 ## Como instalar e executar
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm --package=netlify-cli dlx netlify dev
 ```
 
 Acesse `http://localhost:3000`, informe um domínio público e escolha **Analisar site**.
@@ -25,14 +25,21 @@ Acesse `http://localhost:3000`, informe um domínio público e escolha **Analisa
 Validações:
 
 ```bash
-npm run test:unit
-npm run build
-npm test
+pnpm run test:unit
+pnpm run build
+pnpm test
+```
+
+Para publicar no Netlify pela primeira vez:
+
+```bash
+pnpm --package=netlify-cli dlx netlify login
+pnpm --package=netlify-cli dlx netlify deploy --build --prod
 ```
 
 ## Variáveis de ambiente
 
-O MVP não depende de chaves externas. O arquivo `.env.example` documenta essa decisão. A persistência usa o binding D1 `DB`, declarado em `.openai/hosting.json` e injetado pela plataforma Sites.
+O MVP não depende de chaves externas. O arquivo `.env.example` documenta essa decisão. A persistência usa Netlify Blobs, provisionado automaticamente para o projeto publicado.
 
 ## Como funciona o crawler
 
@@ -78,24 +85,16 @@ features/
   geo/                          Citation Readiness e perguntas
   reports/                      persistência e histórico
   scanner/                      normalização e proteção SSRF
-db/                             schema relacional
+netlify/functions/              adaptador server-side para o Netlify
 types/                          contratos de domínio
 tests/                          parser, SSRF, schema, crawler e scoring
 ```
 
 O motor técnico continua independente de qualquer LLM. `AIProvider` permite adicionar uma camada semântica futura sem acoplar robots.txt, schema, status HTTP ou scoring a uma API específica.
 
-## Banco
+## Persistência
 
-O D1 contém:
-
-- `domains`: domínio único;
-- `scans`: histórico, status, score e snapshot do relatório;
-- `pages`: páginas rastreadas e detalhes;
-- `audit_results`: checks mensuráveis;
-- `recommendations`: plano de ação priorizado.
-
-Os índices cobrem consultas de histórico por domínio e páginas/checks por scan.
+Cada relatório é armazenado como um objeto JSON no Netlify Blobs. Um índice fortemente consistente mantém as 30 análises mais recentes, e os detalhes de cada página permanecem dentro do snapshot do relatório.
 
 ## Segurança
 

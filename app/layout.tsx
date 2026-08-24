@@ -26,21 +26,25 @@ const themeScript = `
   } catch (_) {}
 })();`;
 
+const deploymentUrl = process.env.URL?.startsWith("https://")
+  ? process.env.URL
+  : "https://lumina-ai-visibility.thiagomatos-work.chatgpt.site";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lumina-ai-visibility.thiagomatos-work.chatgpt.site"),
+  metadataBase: new URL(deploymentUrl),
   title: "Lumina — AI Visibility para seu site",
   description: "Descubra como mecanismos de IA encontram, compreendem e citam seu site.",
   openGraph: {
     title: "Lumina — Descubra como as IAs enxergam seu site",
     description: "AI Visibility para sites preparados para serem encontrados, compreendidos e citados.",
     type: "website",
-    images: [{ url: "https://lumina-ai-visibility.thiagomatos-work.chatgpt.site/og.png", width: 1731, height: 909, alt: "Lumina — Descubra como as IAs enxergam seu site" }],
+    images: [{ url: `${deploymentUrl}/og.png`, width: 1731, height: 909, alt: "Lumina — Descubra como as IAs enxergam seu site" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lumina — Descubra como as IAs enxergam seu site",
     description: "AI Visibility para sites preparados para serem encontrados, compreendidos e citados.",
-    images: ["https://lumina-ai-visibility.thiagomatos-work.chatgpt.site/og.png"],
+    images: [`${deploymentUrl}/og.png`],
   },
   icons: {
     icon: "/favicon.svg",
